@@ -121,14 +121,14 @@ body {
   display: flex;
   padding: 0px 10px;
 }
-.chat-screen .typebox > input{
+.chat-screen .typebox input{
   flex:1;
   height: 40px;
   padding: 5px;
   font-size: medium;
   outline: none;
 }
-.chat-screen .typebox > button{
+.chat-screen .typebox button{
   width: 70px;
   height: 40px;
   padding: 3px;
