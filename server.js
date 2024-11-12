@@ -16,15 +16,15 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   socket.on("newuser", function (username) {
-    console.log(username+" joined the conversation");
+    console.log(username + " joined the conversation");
     socket.broadcast.emit("update", username + " joined the conversation");
   });
-  socket.on("chat", function(message) {
-    console.log("Message from", message.username, ":", message.text);
+  socket.on("chat", function (message) {
+    // console.log("Message from", message.username, ":", message.text);
     socket.broadcast.emit("chat", message);
   });
   socket.on("exituser", function (username) {
-    console.log(username+" left the conversation");
+    console.log(username + " left the conversation");
     socket.broadcast.emit("update", username + " left the conversation");
   });
 });

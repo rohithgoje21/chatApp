@@ -11,10 +11,6 @@ document
     if (username !== "") {
       uname = username;
       socket.emit("newuser", uname);
-      displaymessage("update", {
-        username: uname,
-        text: " joined the conversation",
-      });
       document.querySelector(".join-screen").classList.remove("active");
       document.querySelector(".chat-screen").classList.add("active");
     }
@@ -41,10 +37,6 @@ document
   .querySelector(".chat-screen #exit-chat")
   .addEventListener("click", function () {
     socket.emit("exituser", uname);
-    displaymessage("update", {
-      username: uname,
-      text: " left the conversation",
-    });
     document.querySelector(".chat-screen").classList.remove("active");
     document.querySelector(".join-screen").classList.add("active");
   });
@@ -82,12 +74,19 @@ function displaymessage(type, message) {
     let div = document.createElement("div");
     div.append(name, text);
 
-    othermessage.appendChile(div);
+    othermessage.appendChild(div);
     document.querySelector(".chat-screen .messages").appendChild(othermessage);
-  } else {
+  } else if (type == "update") {
     let update = document.createElement("div");
     update.classList.add("update");
-    update.textContent = message.username + message.text;
+    update.textContent = message;
     document.querySelector(".chat-screen .messages").appendChild(update);
   }
 }
+
+socket.on("update", function (message) {
+  displaymessage("update", message);
+});
+socket.on("chat", function (message) {
+  displaymessage("other", message);
+});

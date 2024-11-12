@@ -66,7 +66,7 @@ body {
   cursor: pointer;
 }
 
-.chat-screen .header{
+.chat-screen .header {
   background-color: white;
   height: 50px;
   display: flex;
@@ -74,12 +74,12 @@ body {
   align-items: center;
   padding: 0px 20px;
 }
-.chat-screen .header .logo{
+.chat-screen .header .logo {
   font-size: 18px;
   color: black;
   font-weight: bold;
 }
-.chat-screen .header button{
+.chat-screen .header button {
   padding: 5px 10px;
   border: 1px solid black;
   border-radius: 3px;
@@ -88,47 +88,48 @@ body {
   font-size: 15px;
   cursor: pointer;
 }
-.chat-screen .messages{
-  width:100%;
+.chat-screen .messages {
+  width: 100%;
   height: calc(100% - 100px);
-  overflow:auto;
+  overflow: auto;
   background-color: white;
+  padding-bottom: 20px;
 }
-.chat-screen .messages .message{
+.chat-screen .messages .message {
   display: flex;
   padding: 10px;
 }
-.chat-screen .messages .update{
+.chat-screen .messages .update {
   text-align: center;
 }
-.chat-screen .messages .message{
+.chat-screen .messages .message {
   display: flex;
   padding: 10px;
 }
-.chat-screen .messages .message > div{
+.chat-screen .messages .message > div {
   max-width: 80%;
   background-color: white;
-  box-shadow: 0px 0px 20px 5px rgba(0,0,0,0.05);
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.05);
   padding: 10px;
 }
-.chat-screen .messages .message.my-message{
+.chat-screen .messages .message.my-message {
   justify-content: flex-end;
 }
-.chat-screen .messages .message.other-message{
+.chat-screen .messages .message.other-message {
   justify-content: flex-start;
 }
 .chat-screen .typebox {
   display: flex;
   padding: 0px 10px;
 }
-.chat-screen .typebox input{
-  flex:1;
+.chat-screen .typebox input {
+  flex: 1;
   height: 40px;
   padding: 5px;
   font-size: medium;
   outline: none;
 }
-.chat-screen .typebox button{
+.chat-screen .typebox button {
   width: 70px;
   height: 40px;
   padding: 3px;
