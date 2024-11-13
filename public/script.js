@@ -90,3 +90,7 @@ socket.on("update", function (message) {
 socket.on("chat", function (message) {
   displaymessage("other", message);
 });
+
+window.addEventListener("unload", () => {
+  socket.emit("exituser", uname);
+});
