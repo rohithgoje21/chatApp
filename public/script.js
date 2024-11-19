@@ -4,42 +4,15 @@ let uname;
 
 document
   .querySelector(".join-screen #join-chat")
-  .addEventListener("click", function () {
-    const username = document
-      .querySelector(".join-screen #username-input")
-      .value.trim();
-    if (username !== "") {
-      uname = username;
-      socket.emit("newuser", uname);
-      document.querySelector(".join-screen").classList.remove("active");
-      document.querySelector(".chat-screen").classList.add("active");
-    }
-    document.querySelector(".join-screen #username-input").value = "";
-  });
+  .addEventListener("click", joinUser);
 
 document
   .querySelector(".chat-screen #send-message")
-  .addEventListener("click", function () {
-    let message = document
-      .querySelector(".chat-screen #message-input")
-      .value.trim();
-    if (message !== "") {
-      displaymessage("my", { username: uname, text: message });
-      socket.emit("chat", {
-        username: uname,
-        text: message,
-      });
-    }
-    document.querySelector(".chat-screen #message-input").value = "";
-  });
+  .addEventListener("click", sendMessage);
 
 document
   .querySelector(".chat-screen #exit-chat")
-  .addEventListener("click", function () {
-    socket.emit("exituser", uname);
-    document.querySelector(".chat-screen").classList.remove("active");
-    document.querySelector(".join-screen").classList.add("active");
-  });
+  .addEventListener("click", exitUser);
 
 function displaymessage(type, message) {
   if (type == "my") {
@@ -94,3 +67,54 @@ socket.on("chat", function (message) {
 window.addEventListener("unload", () => {
   socket.emit("exituser", uname);
 });
+
+function joinUser() {
+  const username = document
+    .querySelector(".join-screen #username-input")
+    .value.trim();
+  if (username !== "") {
+    uname = username;
+    socket.emit("newuser", uname);
+    document.querySelector(".join-screen").classList.remove("active");
+    document.querySelector(".chat-screen").classList.add("active");
+  }
+  document.querySelector(".join-screen #username-input").value = "";
+}
+
+function sendMessage() {
+  let message = document
+    .querySelector(".chat-screen #message-input")
+    .value.trim();
+  if (message !== "") {
+    displaymessage("my", { username: uname, text: message });
+    socket.emit("chat", {
+      username: uname,
+      text: message,
+    });
+  }
+  document.querySelector(".chat-screen #message-input").value = "";
+}
+
+function exitUser() {
+  socket.emit("exituser", uname);
+  document.querySelector(".chat-screen").classList.remove("active");
+  document.querySelector(".join-screen").classList.add("active");
+}
+
+document
+  .querySelector(".join-screen #username-input")
+  .addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      joinUser();
+    }
+  });
+
+document
+  .querySelector(".chat-screen #message-input")
+  .addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
