@@ -57,6 +57,12 @@ function displaymessage(type, message) {
   }
 }
 
+socket.on("chat-history", (messages) => {
+  messages.forEach((message) => {
+    displaymessage("other", message); // Adjust 'other' if the user matches
+  });
+});
+
 socket.on("update", function (message) {
   displaymessage("update", message);
 });

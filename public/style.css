@@ -100,6 +100,7 @@ body {
   padding: 10px;
 }
 .chat-screen .messages .update {
+  font-style: italic;
   text-align: center;
 }
 .chat-screen .messages .message {
