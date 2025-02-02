@@ -51,10 +51,17 @@ function displaymessage(type, message) {
     document.querySelector(".chat-screen .messages").appendChild(othermessage);
   } else if (type == "update") {
     let update = document.createElement("div");
-    update.classList.add("update");
-    update.textContent = message;
+
+    if (message.includes("left")) {
+      update.classList.add("update", "alert-danger");
+      update.textContent = message;
+    } else {
+      update.classList.add("update", "alert-success");
+      update.textContent = message;
+    }
     document.querySelector(".chat-screen .messages").appendChild(update);
   }
+  autoScroll();
 }
 
 socket.on("update", function (message) {
@@ -118,3 +125,10 @@ document
       sendMessage();
     }
   });
+
+  function autoScroll() {
+    let container = document.querySelector(".chat-screen .messages");
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }

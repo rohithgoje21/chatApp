@@ -101,6 +101,19 @@ body {
 }
 .chat-screen .messages .update {
   text-align: center;
+  font-style: italic;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid transparent;
+}
+.chat-screen .messages .update.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+.chat-screen .messages .update.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }
 .chat-screen .messages .message {
   display: flex;
@@ -109,8 +122,15 @@ body {
 .chat-screen .messages .message > div {
   max-width: 80%;
   background-color: white;
+}
+.chat-screen .messages .message > div .name {
+  font-size: small;
+  margin-bottom: 5px;
+  font-weight: bolder;
+}
+.chat-screen .messages .message > div .text {
+  padding: 5px;
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.05);
-  padding: 10px;
 }
 .chat-screen .messages .message.my-message {
   justify-content: flex-end;
