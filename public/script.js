@@ -128,7 +128,5 @@ document
 
   function autoScroll() {
     let container = document.querySelector(".chat-screen .messages");
-    if (container) {
-      container.scrollTop = container.scrollHeight;
-    }
+    container.scrollTop = container.scrollHeight;
   }
