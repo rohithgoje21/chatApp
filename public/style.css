@@ -150,13 +150,19 @@ body {
   outline: none;
 }
 .chat-screen .typebox button {
-  width: 70px;
   height: 40px;
-  padding: 3px;
+  padding: 0 10px;
   font-size: medium;
   background-color: black;
   color: white;
   border-radius: 3px;
   border: none;
   cursor: pointer;
+}
+.chat-screen .messages audio {
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 30px;
+}
+#record-voice.recording {
+  transform: scale(0.97);
 }

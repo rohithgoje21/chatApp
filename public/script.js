@@ -125,8 +125,79 @@ document
       sendMessage();
     }
   });
+function autoScroll() {
+  let container = document.querySelector(".chat-screen .messages");
+  container.scrollTop = container.scrollHeight;
+}
 
-  function autoScroll() {
-    let container = document.querySelector(".chat-screen .messages");
-    container.scrollTop = container.scrollHeight;
+let mediaRecorder;
+let audioChunks = [];
+const recordBtn = document.querySelector("#record-voice");
+
+// Start/Stop Recording
+recordBtn.addEventListener("click", async () => {
+  if (!mediaRecorder || mediaRecorder.state === "inactive") {
+    startRecording();
+  } else {
+    stopRecording();
   }
+});
+
+// Function to Start Recording
+async function startRecording() {
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  mediaRecorder = new MediaRecorder(stream);
+  audioChunks = [];
+
+  mediaRecorder.ondataavailable = (event) => {
+    audioChunks.push(event.data);
+  };
+
+  mediaRecorder.onstop = () => {
+    const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+    const reader = new FileReader();
+    reader.readAsDataURL(audioBlob);
+    reader.onloadend = () => {
+      const audioURL = reader.result;
+      socket.emit("voice", { username: uname, audio: audioURL });
+      displayVoiceMessage("my", { username: uname, audio: audioURL });
+    };
+  };
+
+  mediaRecorder.start();
+  recordBtn.classList.add("recording");
+}
+
+// Function to Stop Recording
+function stopRecording() {
+  mediaRecorder.stop();
+  recordBtn.classList.remove("recording");
+}
+
+// Function to Display Voice Messages
+function displayVoiceMessage(type, message) {
+  let audioMessage = document.createElement("div");
+  audioMessage.classList.add(
+    type === "my" ? "my-message" : "other-message",
+    "message"
+  );
+
+  let name = document.createElement("div");
+  name.classList.add("name");
+  name.textContent = type === "my" ? "You" : message.username;
+
+  let audioElement = document.createElement("audio");
+  audioElement.controls = true;
+  audioElement.src = message.audio;
+
+  let div = document.createElement("div");
+  div.append(name, audioElement);
+  audioMessage.appendChild(div);
+  document.querySelector(".chat-screen .messages").appendChild(audioMessage);
+  autoScroll();
+}
+
+// Receive Voice Messages
+socket.on("voice", (message) => {
+  displayVoiceMessage("other", message);
+});

@@ -23,6 +23,9 @@ io.on("connection", (socket) => {
     // console.log("Message from", message.username, ":", message.text);
     socket.broadcast.emit("chat", message);
   });
+  socket.on("voice", function (message) {
+    socket.broadcast.emit("voice", message);
+  });
   socket.on("exituser", function (username) {
     console.log(username + " left the conversation");
     socket.broadcast.emit("update", username + " left the conversation");
