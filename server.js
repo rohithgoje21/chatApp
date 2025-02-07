@@ -29,6 +29,7 @@ io.on("connection", (socket) => {
   socket.on("exituser", function (username) {
     console.log(username + " left the conversation");
     socket.broadcast.emit("update", username + " left the conversation");
+    socket.disconnect();
   });
 });
 

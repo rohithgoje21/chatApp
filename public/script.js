@@ -71,7 +71,7 @@ socket.on("chat", function (message) {
   displaymessage("other", message);
 });
 
-window.addEventListener("unload", () => {
+window.addEventListener("beforeunload", () => {
   socket.emit("exituser", uname);
 });
 
