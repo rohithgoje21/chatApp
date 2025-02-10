@@ -15,21 +15,22 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  socket.on("newuser", function (username) {
-    console.log(username + " joined the conversation");
-    socket.broadcast.emit("update", username + " joined the conversation");
+  socket.on("newuser", function ({ roomId, username }) {
+    socket.join(roomId);
+    console.log(`${username} joined Room ID: ${roomId}`);
+    socket.to(roomId).emit("update", `${username} joined the conversation`);
   });
-  socket.on("chat", function (message) {
-    // console.log("Message from", message.username, ":", message.text);
-    socket.broadcast.emit("chat", message);
+  socket.on("chat", function ({ roomId, username, text }) {
+    // console.log(`[Room ${roomId}] ${username}: ${text}`);
+    socket.to(roomId).emit("chat", { username, text });
   });
-  socket.on("voice", function (message) {
-    socket.broadcast.emit("voice", message);
+  socket.on("voice", function ({roomId, username, audio }) {
+    socket.to(roomId).emit("voice", {username, audio});
   });
-  socket.on("exituser", function (username) {
-    console.log(username + " left the conversation");
-    socket.broadcast.emit("update", username + " left the conversation");
-    socket.disconnect();
+  socket.on("exituser", function ({ roomId, username }) {
+    console.log(`${username} left Room ID: ${roomId}`);
+    socket.to(roomId).emit("update", `${username} left the conversation`);
+    socket.leave(roomId);
   });
 });
 

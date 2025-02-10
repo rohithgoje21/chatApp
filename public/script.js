@@ -1,6 +1,7 @@
 const socket = io();
 
 let uname;
+let roomId;
 
 document
   .querySelector(".join-screen #join-chat")
@@ -72,19 +73,18 @@ socket.on("chat", function (message) {
 });
 
 window.addEventListener("beforeunload", () => {
-  socket.emit("exituser", uname);
+  socket.emit("exituser", { roomId, username: uname });
 });
 
 function joinUser() {
-  const username = document
-    .querySelector(".join-screen #username-input")
-    .value.trim();
-  if (username !== "") {
-    uname = username;
-    socket.emit("newuser", uname);
+  roomId = document.querySelector("#room-id-input").value.trim();
+  uname = document.querySelector("#username-input").value.trim();
+  if (roomId !== "" && uname !== "") {
+    socket.emit("newuser", { roomId, username: uname });
     document.querySelector(".join-screen").classList.remove("active");
     document.querySelector(".chat-screen").classList.add("active");
   }
+  document.querySelector(".join-screen #room-id-input").value = "";
   document.querySelector(".join-screen #username-input").value = "";
 }
 
@@ -95,6 +95,7 @@ function sendMessage() {
   if (message !== "") {
     displaymessage("my", { username: uname, text: message });
     socket.emit("chat", {
+      roomId,
       username: uname,
       text: message,
     });
@@ -103,19 +104,10 @@ function sendMessage() {
 }
 
 function exitUser() {
-  socket.emit("exituser", uname);
+  socket.emit("exituser", { roomId, username: uname });
   document.querySelector(".chat-screen").classList.remove("active");
   document.querySelector(".join-screen").classList.add("active");
 }
-
-document
-  .querySelector(".join-screen #username-input")
-  .addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      joinUser();
-    }
-  });
 
 document
   .querySelector(".chat-screen #message-input")
@@ -159,7 +151,7 @@ async function startRecording() {
     reader.readAsDataURL(audioBlob);
     reader.onloadend = () => {
       const audioURL = reader.result;
-      socket.emit("voice", { username: uname, audio: audioURL });
+      socket.emit("voice", {roomId, username: uname, audio: audioURL });
       displayVoiceMessage("my", { username: uname, audio: audioURL });
     };
   };
