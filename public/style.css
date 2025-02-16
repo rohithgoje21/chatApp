@@ -48,6 +48,7 @@ body {
   margin: 10px 0px;
   padding: 5px;
   font-size: medium;
+  outline: none;
 }
 .join-screen .form-button {
   width: 70px;
@@ -86,7 +87,8 @@ body {
 .chat-screen .messages {
   width: 100%;
   height: calc(100% - 100px);
-  overflow: auto;
+  overflow-x: clip;
+  overflow-y: auto;
   background-color: white;
   padding-bottom: 20px;
 }

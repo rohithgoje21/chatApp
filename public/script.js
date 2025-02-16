@@ -80,6 +80,7 @@ function joinUser() {
   roomId = document.querySelector("#room-id-input").value.trim();
   uname = document.querySelector("#username-input").value.trim();
   if (roomId !== "" && uname !== "") {
+    document.querySelector(".chat-screen .messages").innerHTML = "";
     socket.emit("newuser", { roomId, username: uname });
     document.querySelector(".join-screen").classList.remove("active");
     document.querySelector(".chat-screen").classList.add("active");
@@ -105,6 +106,7 @@ function sendMessage() {
 
 function exitUser() {
   socket.emit("exituser", { roomId, username: uname });
+  document.querySelector(".chat-screen .messages").innerHTML = "";
   document.querySelector(".chat-screen").classList.remove("active");
   document.querySelector(".join-screen").classList.add("active");
 }
