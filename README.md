@@ -19,6 +19,11 @@ chatApp is a real-time chat application built using Socket.IO, Node.js, and Expr
 
 3. WebSockets: Real-time communication
 
+# Sample Images
+![Screenshot 2025-06-07 191612](https://github.com/user-attachments/assets/ed15f02f-eb0b-4e5f-811c-3fd3dab02733)
+
+![Screenshot 2025-06-07 191842](https://github.com/user-attachments/assets/91b6f4dc-84b1-40f5-9634-5272a533889f)
+
 # Installation & Setup
 1. git clone https://github.com/rohithgoje21/chatApp.git
 
@@ -27,3 +32,5 @@ chatApp is a real-time chat application built using Socket.IO, Node.js, and Expr
 3. npm install
 
 4. npm start
+
+
